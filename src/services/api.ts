@@ -10,9 +10,11 @@ export function get(id: any) {
   return axios.get(LOCATIONS_API + id);
   // return fetch(LOCATIONS_API+id).then(resp => resp.json())
 }
-export function set(location: any) {
+export function set(location: any, token: any) {
   console.log({ location });
-  return axios.post(LOCATIONS_API, location);
+  return axios.post(LOCATIONS_API, location, {
+    headers: { authorization: 'Bearer ' + token },
+  });
   /* return fetch(LOCATIONS_API, {
         method: 'POST',
         body: JSON.stringify(location),

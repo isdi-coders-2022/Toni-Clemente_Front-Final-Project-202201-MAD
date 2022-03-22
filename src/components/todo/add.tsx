@@ -3,15 +3,20 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Location } from '../../models/location';
 import { createLocation } from '../../redux/locations/action-creators';
+import { set } from '../../services/api';
 import { store } from '../../redux/store'; //añadido, supuestamente soluciona el problema
 type RootState = ReturnType<typeof store.getState>; //añadido, supuestamente soluciona el problema
 
 export function Add() {
   const user = useSelector((state: RootState) => state.user);
   const dispatch = useDispatch();
+
   const addLocation = (newLocation: any) => {
-    dispatch(createLocation(newLocation));
+    set(newLocation, user.token).then((resp) => {
+      dispatch(createLocation(resp.data));
+    });
   };
+
   const [newLocation, setNewLocation] = useState(new Location());
 
   const handleSubmit = (ev: any) => {
@@ -21,6 +26,7 @@ export function Add() {
       ...newLocation,
       author: { _id: user.id, name: user.name },
     });
+    //addTask({ ...newTask, responsible: { _id: user.id, name: user.userName } });
     setNewLocation(new Location());
   };
 
