@@ -27,6 +27,8 @@ export function UserForm({
       } else {
         result = await register(user);
       }
+      result.data.name = result.data.userName;
+      delete result.data.userName;
       dispatch(actions.login({ ...result.data, isLogged: true }));
       setShowForm(false);
     } catch (error) {
