@@ -6,11 +6,11 @@ export function getAll() {
   return axios.get(LOCATIONS_API);
   // return fetch(LOCATIONS_API).then(resp => resp.json())
 }
-export function get(id) {
+export function get(id: any) {
   return axios.get(LOCATIONS_API + id);
   // return fetch(LOCATIONS_API+id).then(resp => resp.json())
 }
-export function set(location) {
+export function set(location: any) {
   console.log({ location });
   return axios.post(LOCATIONS_API, location);
   /* return fetch(LOCATIONS_API, {
@@ -21,12 +21,12 @@ export function set(location) {
         })
     }) */
 }
-export function update(location, token) {
+export function update(location: any, token: any) {
   return axios.patch(LOCATIONS_API + location._id, location, {
     headers: { authorization: 'Bearer ' + token },
   });
 }
-export function remove(id, token) {
+export function remove(id: any, token: any) {
   return axios.delete(LOCATIONS_API + id, {
     headers: { authorization: 'Bearer ' + token },
   });
