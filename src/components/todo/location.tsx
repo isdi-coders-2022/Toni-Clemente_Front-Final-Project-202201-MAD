@@ -5,6 +5,7 @@ import {
   updateLocation,
 } from '../../redux/locations/action-creators';
 import { remove } from '../../services/api';
+import { Update } from './update';
 import { store } from '../../redux/store'; //añadido, supuestamente soluciona el problema
 type RootState = ReturnType<typeof store.getState>; //añadido, supuestamente soluciona el problema
 
@@ -51,6 +52,7 @@ export function Location({ location }: { location: any }) {
       >
         🗑️
       </div>
+      <Update location={location} />
     </li>
   );
 }
