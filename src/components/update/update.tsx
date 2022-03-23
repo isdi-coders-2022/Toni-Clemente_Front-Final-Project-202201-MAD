@@ -1,33 +1,60 @@
 /* eslint-disable react/no-typos */
-import { useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Location } from '../../models/location';
-import { createLocation } from '../../redux/locations/action-creators';
-import { set } from '../../services/api';
+//import { Location } from '../../models/location';
+import { updateLocation } from '../../redux/locations/action-creators';
+import { locationsReducer } from '../../redux/locations/locations-reducers';
+import { update, getDetails } from '../../services/api';
 import { store } from '../../redux/store'; //añadido, supuestamente soluciona el problema
 type RootState = ReturnType<typeof store.getState>; //añadido, supuestamente soluciona el problema
 
-export function Add() {
+export function Update() {
   const user = useSelector((state: RootState) => state.user);
   const dispatch = useDispatch();
 
-  const addLocation = (newLocation: any) => {
-    set(newLocation, user.token).then((resp) => {
-      dispatch(createLocation(resp.data));
+  const { _id } = useParams();
+
+  const detailsURL = `http://localhost:3600/locations/${_id}`;
+  console.log(detailsURL);
+
+  const [locationDetails, setLocationDetails] = useState({});
+
+  useEffect(() => {
+    getDetails(detailsURL).then((resp) => {
+      setLocationDetails(resp.data);
+      console.log(resp.data);
     });
+  }, []);
+
+  const toggleLocation = (newLocation: any) => {
+    update(newLocation, user.token).then((resp) =>
+      dispatch(updateLocation(resp.data))
+    );
   };
 
-  const [newLocation, setNewLocation] = useState(new Location());
+  const [newLocation, setNewLocation] = useState({
+    _id: _id,
+    state: locationDetails.state,
+    town: locationDetails.town,
+    comment: locationDetails.comment,
+    map: locationDetails.map,
+    photos: locationDetails.photos,
+  });
 
   const handleSubmit = (ev: any) => {
     ev.preventDefault();
-    console.log('Added location', newLocation);
-    addLocation({
-      ...newLocation,
-      author: { _id: user.id, name: user.name },
+    console.log('Updated location', newLocation);
+    toggleLocation(newLocation);
+    setNewLocation({
+      _id: _id,
+      state: locationDetails.state,
+      town: locationDetails.town,
+      comment: locationDetails.comment,
+      map: locationDetails.map,
+      photos: locationDetails.photos,
     });
-    //addTask({ ...newTask, responsible: { _id: user.id, name: user.userName } });
-    setNewLocation(new Location());
+    console.log(setNewLocation);
   };
 
   const handleChange = (ev: any) => {
@@ -36,7 +63,7 @@ export function Add() {
 
   return (
     <>
-      <h2>Add Location</h2>
+      <h2>Update Location</h2>
       <form onSubmit={handleSubmit}>
         <input
           type="text"
@@ -44,7 +71,6 @@ export function Add() {
           placeholder="Provincia de la localización"
           value={newLocation.state}
           onChange={handleChange}
-          required
         />
         <input
           type="text"
@@ -52,7 +78,6 @@ export function Add() {
           placeholder="Ciudad de la localización"
           value={newLocation.town}
           onChange={handleChange}
-          required
         />
         <input
           type="text"
@@ -60,7 +85,6 @@ export function Add() {
           placeholder="Comentario de la localización"
           value={newLocation.comment}
           onChange={handleChange}
-          required
         />
         <input
           type="text"
@@ -68,7 +92,6 @@ export function Add() {
           placeholder="Mapa de la localización"
           value={newLocation.map}
           onChange={handleChange}
-          required
         />
         <input
           type="text"
@@ -76,16 +99,16 @@ export function Add() {
           placeholder="Fotos de la localización"
           value={newLocation.photos}
           onChange={handleChange}
-          required
         />
         <input
           type="text"
-          name="author"
-          placeholder="Usuario que subió la localización"
-          value={user.name}
+          name="_id"
+          placeholder="id de la localización"
+          value={newLocation._id}
           readOnly
         />
-        <button type="submit">Add</button>
+
+        <button type="submit">Update</button>
       </form>
     </>
   );

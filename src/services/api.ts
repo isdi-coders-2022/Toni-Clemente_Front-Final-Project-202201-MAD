@@ -33,3 +33,7 @@ export function remove(id: any, token: any) {
     headers: { authorization: 'Bearer ' + token },
   });
 }
+
+export function getDetails(url: any) {
+  return axios.get(url);
+}
