@@ -49,15 +49,17 @@ export function Add() {
           <option value="Asturias">Asturias</option>
           <option value="Baleares">Baleares</option>
           <option value="Canarias">Canarias</option>
+          <option value="Cantabria">Cantabria</option>
           <option value="Castilla La Mancha">Castilla La Mancha</option>
-          <option value="Castilla Leon">Castilla Leon</option>
+          <option value="Castilla y Leon">Castilla Leon</option>
           <option value="Cataluña">Cataluña</option>
+          <option value="Extremadura">Extremadura</option>
           <option value="Galicia">Galicia</option>
+          <option value="La Rioja">La Rioja</option>
           <option value="Murcia">Murcia</option>
           <option value="Madrid">Madrid</option>
           <option value="Navarra">Navarra</option>
           <option value="Pais Vasco">Pais Vasco</option>
-
           <option value="Valencia">Valencia</option>
         </select>
         {/* <input
