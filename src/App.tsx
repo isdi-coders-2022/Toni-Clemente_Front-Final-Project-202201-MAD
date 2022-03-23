@@ -1,9 +1,15 @@
-import React from 'react';
+import { Routes, Route } from 'react-router-dom';
+import { AllLocations } from './components/all-locations/all-locations';
+import { Home } from './components/home/home';
+import { Add } from './components/core/add';
+import { Details } from './components/details/details';
+import { Update } from './components/update/update';
+import { Menu } from './components/core/menu';
 import { useSelector } from 'react-redux';
-import logo from './logo.svg';
+
 import './App.css';
-import { ToDo } from './components/todo/todo';
-import { UserButtons } from './components/user/user-buttons';
+
+import { UserButtons } from './components/core/user-buttons';
 import { store } from './redux/store'; //añadido, supuestamente soluciona el problema
 type RootState = ReturnType<typeof store.getState>; //añadido, supuestamente soluciona el problema
 
@@ -11,16 +17,17 @@ function App() {
   const user = useSelector((state: RootState) => state.user);
   return (
     <div className="App">
-      <header className="App-header">
-        <header>
-          <h1>Todas las ubicaciones</h1>
-          <UserButtons />
-        </header>
-
-        <img src={logo} className="App-logo" alt="logo" />
-
-        <ToDo />
-      </header>
+      <Menu />
+      <UserButtons />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/home" element={<Home />} />
+        <Route path="/add" element={<Add />} />
+        <Route path="/allLocations" element={<AllLocations />} />
+        <Route path="/details/:_id" element={<Details />} />
+        <Route path="/update/:_id" element={<Update />} />
+      </Routes>
+      <header className="App-header"></header>
     </div>
   );
 }
