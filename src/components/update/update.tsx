@@ -18,7 +18,15 @@ export function Update() {
   const detailsURL = `http://localhost:3600/locations/${_id}`;
   console.log(detailsURL);
 
-  const [locationDetails, setLocationDetails] = useState({});
+  const [locationDetails, setLocationDetails] = useState({
+    _id: '',
+    state: '',
+    town: '',
+    comment: '',
+    map: '',
+    photos: '',
+    author: '',
+  });
 
   useEffect(() => {
     getDetails(detailsURL).then((resp) => {

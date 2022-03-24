@@ -5,7 +5,7 @@ import { Add } from './components/add/add';
 import { Details } from './components/details/details';
 import { Update } from './components/update/update';
 import { Menu } from './components/core/menu';
-import { useSelector } from 'react-redux';
+//import { useSelector } from 'react-redux';
 import './App.css';
 
 import { UserButtons } from './components/core/user-buttons';
@@ -13,7 +13,7 @@ import { store } from './redux/store'; //añadido, supuestamente soluciona el pr
 type RootState = ReturnType<typeof store.getState>; //añadido, supuestamente soluciona el problema
 
 function App() {
-  const user = useSelector((state: RootState) => state.user);
+  // const user = useSelector((state: RootState) => state.user);
   return (
     <div className="App">
       <Menu />
