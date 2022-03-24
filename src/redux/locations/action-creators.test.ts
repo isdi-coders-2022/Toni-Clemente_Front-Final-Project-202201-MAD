@@ -6,8 +6,8 @@ describe('Given the function createLocation', () => {
       const location = { cosicas: 'estas' };
 
       expect(action.createLocation(location)).toEqual({
-        location: { cosicas: 'estas' },
-        type: '@location/add',
+        payload: { cosicas: 'estas' },
+        type: '@location/create',
       });
     });
   });
@@ -19,7 +19,7 @@ describe('Given the function removeLocation', () => {
       const location = { cosicas: 'estas' };
 
       expect(action.removeLocation(location)).toEqual({
-        location: { cosicas: 'estas' },
+        payload: { cosicas: 'estas' },
         type: '@location/remove',
       });
     });
@@ -32,7 +32,7 @@ describe('Given the function updateLocation', () => {
       const location = { cosicas: 'estas' };
 
       expect(action.updateLocation(location)).toEqual({
-        book: { cosicas: 'estas' },
+        payload: { cosicas: 'estas' },
         type: '@location/update',
       });
     });
@@ -43,9 +43,9 @@ describe('Given the function loadLocations', () => {
     test('then, it should work like this', () => {
       const locations = { cosicas: 'estas' };
 
-      expect(action.loadBooks(locations)).toEqual({
-        locations: { cosicas: 'estas' },
-        type: '@books/load',
+      expect(action.loadLocations(locations)).toEqual({
+        payload: { cosicas: 'estas' },
+        type: '@locations/load',
       });
     });
   });

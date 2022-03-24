@@ -15,7 +15,16 @@ export function Details() {
   const detailsURL = `http://localhost:3600/locations/${_id}`;
   console.log(detailsURL);
 
-  const [locationDetails, setLocationDetails] = useState({});
+  const [locationDetails, setLocationDetails] = useState({
+    _id: '',
+    state: '',
+    town: '',
+    comment: '',
+    latitude: '',
+    longitude: '',
+    photos: '',
+    author: { name: '' },
+  });
 
   useEffect(() => {
     getDetails(detailsURL).then((resp) => {
@@ -25,9 +34,9 @@ export function Details() {
   }, []);
 
   const deleteLocation = () => {
-    remove(_id, user.token).then((resp) => {
+    remove(locationDetails._id, user.token).then((resp) => {
       if (resp.statusText.toLowerCase() === 'ok') {
-        dispatch(removeLocation(_id));
+        dispatch(removeLocation(locationDetails._id));
       }
     });
   };
@@ -37,34 +46,31 @@ export function Details() {
     deleteLocation();
   }
 
-  // const [robotDetails, setRobotDetails] = useState({});
-
-  // useEffect(() => {
-  //   getDetails(detailsURL).then((resp) => {
-  //     setRobotDetails(resp.data);
-  //   });
-  // }, []);
-
   return (
     <>
       <h2>Página de detalle de {locationDetails._id}</h2>
+      <span className="location-data">
+        {locationDetails.state}
+        {locationDetails.town}
+        {locationDetails.comment}
+
+        {locationDetails.photos}
+        {locationDetails.author.name}
+      </span>{' '}
       <Link to={`/update/${locationDetails._id}`}>
-        <span className="location-data">
-          {locationDetails.state}
-          {locationDetails.town}
-          {locationDetails.comment}
-          {locationDetails.map}
-          {locationDetails.photos}locationDetails
-        </span>{' '}
+        <button type="button" role="button" tabIndex={0}>
+          Change information
+        </button>
       </Link>
-      <div
+      <button
+        type="button"
         role="button"
         tabIndex={0}
         onClick={handleClick}
         onKeyPress={handleClick}
       >
-        🗑️
-      </div>
+        Delete
+      </button>
     </>
   );
 }

@@ -30,7 +30,8 @@ export function Add() {
       addLocation({
         ...newLocation,
         author: { _id: user.id, name: user.name },
-        map: `https://www.google.es/maps/@${position.coords.latitude},${position.coords.longitude},15z?hl=en`,
+        latitude: position.coords.latitude,
+        longitude: position.coords.longitude,
       });
     });
 
