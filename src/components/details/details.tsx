@@ -11,6 +11,7 @@ export function Details() {
   //const dispatch = useDispatch();
   const { _id } = useParams();
   const dispatch = useDispatch();
+  let gmapsLink = '';
 
   const detailsURL = `http://localhost:3600/locations/${_id}`;
   console.log(detailsURL);
@@ -46,6 +47,15 @@ export function Details() {
     deleteLocation();
   }
 
+  function handleClickLink() {
+    navigator.geolocation.getCurrentPosition(function (position) {
+      const origLatitude = position.coords.latitude.toString();
+      const origLongitude = position.coords.longitude.toString();
+      gmapsLink = `https://www.google.com/maps/dir/?api=1&origin=${origLatitude},${origLongitude}&destination=${locationDetails.latitude},${locationDetails.longitude}`;
+      window.location.href = gmapsLink;
+    });
+  }
+
   return (
     <>
       <h2>Página de detalle de {locationDetails._id}</h2>
@@ -70,6 +80,15 @@ export function Details() {
         onKeyPress={handleClick}
       >
         Delete
+      </button>
+      <button
+        type="button"
+        role="button"
+        tabIndex={0}
+        onClick={handleClickLink}
+        onKeyPress={handleClickLink}
+      >
+        How to Go
       </button>
     </>
   );

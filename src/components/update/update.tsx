@@ -18,19 +18,20 @@ export function Update() {
   const detailsURL = `http://localhost:3600/locations/${_id}`;
   console.log(detailsURL);
 
-  const [locationDetails, setLocationDetails] = useState({
+  const [locationUpdate, setLocationUpdate] = useState({
     _id: '',
     state: '',
     town: '',
     comment: '',
-    map: '',
+    latitude: '',
+    longitude: '',
     photos: '',
     author: '',
   });
 
   useEffect(() => {
     getDetails(detailsURL).then((resp) => {
-      setLocationDetails(resp.data);
+      setLocationUpdate(resp.data);
       console.log(resp.data);
     });
   }, []);
@@ -43,26 +44,34 @@ export function Update() {
 
   const [newLocation, setNewLocation] = useState({
     _id: _id,
-    state: locationDetails.state,
-    town: locationDetails.town,
-    comment: locationDetails.comment,
-    map: locationDetails.map,
-    photos: locationDetails.photos,
+    state: locationUpdate.state,
+    town: locationUpdate.town,
+    comment: locationUpdate.comment,
+    latitude: locationUpdate.latitude,
+    longitude: locationUpdate.longitude,
+    photos: locationUpdate.photos,
   });
 
   const handleSubmit = (ev: any) => {
     ev.preventDefault();
-    console.log('Updated location', newLocation);
-    toggleLocation(newLocation);
-    setNewLocation({
-      _id: _id,
-      state: locationDetails.state,
-      town: locationDetails.town,
-      comment: locationDetails.comment,
-      map: locationDetails.map,
-      photos: locationDetails.photos,
-    });
-    console.log(setNewLocation);
+    navigator.geolocation.getCurrentPosition(
+      function (position) {
+        const latitude = position.coords.latitude.toString();
+        const longitude = position.coords.longitude.toString();
+        console.log('Updated location', newLocation);
+        toggleLocation(newLocation);
+        setNewLocation({
+          _id: _id,
+          state: locationUpdate.state,
+          town: locationUpdate.town,
+          comment: locationUpdate.comment,
+          photos: locationUpdate.photos,
+          latitude: latitude,
+          longitude: longitude,
+        });
+      }
+      //console.log(setNewLocation);
+    );
   };
 
   const handleChange = (ev: any) => {
@@ -72,14 +81,36 @@ export function Update() {
   return (
     <>
       <h2>Update Location</h2>
+      <p>
+        Your current location will substitute the previous one after pressing on
+        Modify.
+      </p>
+
       <form onSubmit={handleSubmit}>
-        <input
-          type="text"
+        <select
           name="state"
-          placeholder="Provincia de la localización"
+          id="state"
           value={newLocation.state}
           onChange={handleChange}
-        />
+        >
+          <option value="Andalucia">Andalucia</option>
+          <option value="Aragon">Aragon</option>
+          <option value="Asturias">Asturias</option>
+          <option value="Baleares">Baleares</option>
+          <option value="Canarias">Canarias</option>
+          <option value="Cantabria">Cantabria</option>
+          <option value="Castilla La Mancha">Castilla La Mancha</option>
+          <option value="Castilla y Leon">Castilla Leon</option>
+          <option value="Cataluña">Cataluña</option>
+          <option value="Extremadura">Extremadura</option>
+          <option value="Galicia">Galicia</option>
+          <option value="La Rioja">La Rioja</option>
+          <option value="Murcia">Murcia</option>
+          <option value="Madrid">Madrid</option>
+          <option value="Navarra">Navarra</option>
+          <option value="Pais Vasco">Pais Vasco</option>
+          <option value="Valencia">Valencia</option>
+        </select>
         <input
           type="text"
           name="town"
@@ -94,13 +125,13 @@ export function Update() {
           value={newLocation.comment}
           onChange={handleChange}
         />
-        <input
+        {/* <input
           type="text"
           name="map"
           placeholder="Mapa de la localización"
-          value={newLocation.map}
+          value={newLocation.map}s
           onChange={handleChange}
-        />
+        /> */}
         <input
           type="text"
           name="photos"
@@ -116,7 +147,7 @@ export function Update() {
           readOnly
         />
 
-        <button type="submit">Update</button>
+        <button type="submit">Modify</button>
       </form>
     </>
   );
