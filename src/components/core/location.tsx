@@ -1,24 +1,19 @@
-import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { store } from '../../redux/store'; //añadido, supuestamente soluciona el problema
 type RootState = ReturnType<typeof store.getState>; //añadido, supuestamente soluciona el problema
+
+import './location.scss';
 
 export function Location({ location }: { location: any }) {
   // const user = useSelector((state: RootState) => state.user); // añadido : RootState  al ((state
 
   return (
-    <li>
-      <Link to={`/details/${location._id}`}>
-        <span className="location-data">
-          {location.state}
-          {location.town}
-          {location.comment}
-          {location.map}
-          {location.photo}
-        </span>{' '}
-        -<span>{location.author.name}</span>
-      </Link>
-    </li>
+    <Link to={`/details/${location._id}`}>
+      <div className="location-data">
+        <img className="location-data__image" src={`${location.photo}`} />
+        <div className="location-data__text">A location in {location.town}</div>
+      </div>
+    </Link>
   );
 }
 
@@ -29,3 +24,19 @@ export function Location({ location }: { location: any }) {
         </li>
     );
 } */
+
+// {
+//   location.state;
+// }
+// {
+//   location.town;
+// }
+// {
+//   location.comment;
+// }
+// {
+//   location.map;
+// }
+// {
+//   location.photo;
+// }

@@ -6,6 +6,8 @@ import { removeLocation } from '../../redux/locations/action-creators';
 import { store } from '../../redux/store'; //añadido, supuestamente soluciona el problema
 type RootState = ReturnType<typeof store.getState>; //añadido, supuestamente soluciona el problema
 
+import './details.scss';
+
 export function Details() {
   const user = useSelector((state: RootState) => state.user); // añadido : RootState  al ((state
   //const dispatch = useDispatch();
@@ -60,39 +62,47 @@ export function Details() {
 
   return (
     <>
-      <h2>Página de detalle de {locationDetails._id}</h2>
-      <span className="location-data">
-        {locationDetails.state}
-        {locationDetails.town}
-        {locationDetails.comment}
-
-        {locationDetails.photo}
-        {locationDetails.author.name}
-      </span>{' '}
-      <Link to={`/update/${locationDetails._id}`}>
-        <button type="button" role="button" tabIndex={0}>
-          Change information
+      <h2>A location in {locationDetails.town}</h2>
+      <div className="location-details">
+        <div className="location-details__image">
+          <img src={`${locationDetails.photo}`} />
+          <p>Location uploaded by {locationDetails.author.name}</p>
+        </div>
+        <div className="location-details__info">
+          <div className="location-details__info1">
+            A location in {locationDetails.town}, {locationDetails.state}
+          </div>
+          <div className="location-details__info2">
+            {locationDetails.comment}
+          </div>
+        </div>
+      </div>
+      <div className="buttons">
+        <Link to={`/update/${locationDetails._id}`}>
+          <button type="button" role="button" tabIndex={0}>
+            Change information
+          </button>
+        </Link>
+        <button
+          type="button"
+          role="button"
+          tabIndex={0}
+          onClick={handleClick}
+          onKeyPress={handleClick}
+        >
+          Delete
         </button>
-      </Link>
-      <button
-        type="button"
-        role="button"
-        tabIndex={0}
-        onClick={handleClick}
-        onKeyPress={handleClick}
-      >
-        Delete
-      </button>
-      ;
-      <button
-        type="button"
-        role="button"
-        tabIndex={0}
-        onClick={handleClickLink}
-        onKeyPress={handleClickLink}
-      >
-        How to Go
-      </button>
+
+        <button
+          type="button"
+          role="button"
+          tabIndex={0}
+          onClick={handleClickLink}
+          onKeyPress={handleClickLink}
+        >
+          How to Go
+        </button>
+      </div>
     </>
   );
 }
