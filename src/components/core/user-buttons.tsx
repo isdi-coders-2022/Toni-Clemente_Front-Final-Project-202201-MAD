@@ -25,14 +25,16 @@ export function UserButtons() {
 
   return (
     <div>
-      {!showLogin && (
-        <button onClick={handleLogin}>
-          {user.isLogged ? 'Logout' : 'Login'}
-        </button>
-      )}
-      {!showLogin && !user.isLogged && (
-        <button onClick={handleRegistration}>Registration</button>
-      )}
+      {showRegistration ||
+        (!showLogin && (
+          <button onClick={handleLogin}>
+            {user.isLogged ? 'Logout' : 'Login'}
+          </button>
+        ))}
+      {showRegistration ||
+        (!showLogin && !user.isLogged && (
+          <button onClick={handleRegistration}>Register</button>
+        ))}
       {showLogin && <UserForm setShowForm={setShowLogin} mode="login" />}
       {showRegistration && (
         <UserForm setShowForm={setShowRegistration} mode="registration" />

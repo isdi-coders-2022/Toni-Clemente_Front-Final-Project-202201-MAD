@@ -11,7 +11,7 @@ export class Location {
 
   author;
 
-  photos;
+  photo;
 
   constructor(
     state = '',
@@ -19,7 +19,7 @@ export class Location {
     comment = '',
     map = '',
     author = '',
-    photos = ''
+    photo = ''
   ) {
     //this.id = parseInt(Math.random() * 1_000_000_000, 10);
     this.state = state;
@@ -27,6 +27,6 @@ export class Location {
     this.comment = comment;
     this.map = map;
     this.author = author;
-    this.photos = photos;
+    this.photo = photo;
   }
 }

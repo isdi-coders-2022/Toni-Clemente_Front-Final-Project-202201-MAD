@@ -1,5 +1,5 @@
 /* eslint-disable react/no-typos */
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 //import { Location } from '../../models/location';
@@ -14,6 +14,7 @@ export function Update() {
   const dispatch = useDispatch();
 
   const { _id } = useParams();
+  const navigate = useNavigate();
 
   const detailsURL = `http://localhost:3600/locations/${_id}`;
   console.log(detailsURL);
@@ -25,7 +26,7 @@ export function Update() {
     comment: '',
     latitude: '',
     longitude: '',
-    photos: '',
+    photo: '',
     author: '',
   });
 
@@ -40,6 +41,11 @@ export function Update() {
     update(newLocation, user.token).then((resp) =>
       dispatch(updateLocation(resp.data))
     );
+    //necesita esperar 1 segundo para mostrar en la lista el cambio correctamente.
+    // de lo contrario mostraría en la lista la modificacion aplicada a todas las localizaciones
+    setTimeout(() => {
+      navigate('/AllLocations');
+    }, 1000);
   };
 
   const [newLocation, setNewLocation] = useState({
@@ -49,7 +55,7 @@ export function Update() {
     comment: locationUpdate.comment,
     latitude: locationUpdate.latitude,
     longitude: locationUpdate.longitude,
-    photos: locationUpdate.photos,
+    photo: locationUpdate.photo,
   });
 
   const handleSubmit = (ev: any) => {
@@ -62,10 +68,10 @@ export function Update() {
         toggleLocation(newLocation);
         setNewLocation({
           _id: _id,
-          state: locationUpdate.state,
-          town: locationUpdate.town,
-          comment: locationUpdate.comment,
-          photos: locationUpdate.photos,
+          state: newLocation.state,
+          town: newLocation.town,
+          comment: newLocation.comment,
+          photo: newLocation.photo,
           latitude: latitude,
           longitude: longitude,
         });
@@ -134,9 +140,9 @@ export function Update() {
         /> */}
         <input
           type="text"
-          name="photos"
+          name="photo"
           placeholder="Fotos de la localización"
-          value={newLocation.photos}
+          value={newLocation.photo}
           onChange={handleChange}
         />
         <input

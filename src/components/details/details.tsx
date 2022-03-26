@@ -1,4 +1,4 @@
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { getDetails, remove } from '../../services/api';
 import { useSelector, useDispatch } from 'react-redux';
@@ -11,6 +11,7 @@ export function Details() {
   //const dispatch = useDispatch();
   const { _id } = useParams();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   let gmapsLink = '';
 
   const detailsURL = `http://localhost:3600/locations/${_id}`;
@@ -23,7 +24,7 @@ export function Details() {
     comment: '',
     latitude: '',
     longitude: '',
-    photos: '',
+    photo: '',
     author: { name: '' },
   });
 
@@ -39,6 +40,7 @@ export function Details() {
       if (resp.statusText.toLowerCase() === 'ok') {
         dispatch(removeLocation(locationDetails._id));
       }
+      navigate('/AllLocations');
     });
   };
 
@@ -52,7 +54,7 @@ export function Details() {
       const origLatitude = position.coords.latitude.toString();
       const origLongitude = position.coords.longitude.toString();
       gmapsLink = `https://www.google.com/maps/dir/?api=1&origin=${origLatitude},${origLongitude}&destination=${locationDetails.latitude},${locationDetails.longitude}`;
-      window.location.href = gmapsLink;
+      window.open(gmapsLink, '_newtab');
     });
   }
 
@@ -64,7 +66,7 @@ export function Details() {
         {locationDetails.town}
         {locationDetails.comment}
 
-        {locationDetails.photos}
+        {locationDetails.photo}
         {locationDetails.author.name}
       </span>{' '}
       <Link to={`/update/${locationDetails._id}`}>
@@ -81,6 +83,7 @@ export function Details() {
       >
         Delete
       </button>
+      ;
       <button
         type="button"
         role="button"

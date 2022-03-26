@@ -42,27 +42,25 @@ export function UserForm({
 
   return (
     <form>
-      <fieldset>
-        <legend>
-          {mode.toLowerCase() === 'login' ? 'Login' : 'Registration'}
-        </legend>
-        <input
-          type="text"
-          name="name"
-          placeholder="user name"
-          value={user.name}
-          onChange={handleChange}
-        />
-        <input
-          type="password"
-          name="passwd"
-          placeholder="password"
-          value={user.passwd}
-          onChange={handleChange}
-        ></input>
-      </fieldset>
+      <input
+        type="text"
+        name="name"
+        placeholder="user name"
+        value={user.name}
+        onChange={handleChange}
+      />
+      <br />
+      <input
+        type="password"
+        name="passwd"
+        placeholder="password"
+        value={user.passwd}
+        onChange={handleChange}
+      />
+      <br />
+
       <button type="submit" onClick={handleSubmit}>
-        {mode.toLowerCase() === 'login' ? 'Login' : 'Registration'}
+        {mode.toLowerCase() === 'login' ? 'Login' : 'Register'}
       </button>
       <button type="reset" onClick={handleCancel}>
         Cancel
