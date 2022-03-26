@@ -6,8 +6,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Location } from '../../models/location';
 import { createLocation } from '../../redux/locations/action-creators';
 import { set } from '../../services/api';
-import { store } from '../../redux/store'; //añadido, supuestamente soluciona el problema
 import { app } from '../../firebase/firebase';
+import { store } from '../../redux/store'; //añadido, supuestamente soluciona el problema
+
 type RootState = ReturnType<typeof store.getState>; //añadido, supuestamente soluciona el problema
 
 export function Add() {
@@ -29,6 +30,7 @@ export function Add() {
 
   const handleSubmit = async (ev: any) => {
     ev.preventDefault();
+
     let url = '';
     const imageRef = ref(storage, image.name);
     await uploadBytes(imageRef, image);
@@ -41,11 +43,13 @@ export function Add() {
       addLocation({
         ...newLocation,
         author: { _id: user.id, name: user.name },
-        latitude: position.coords.latitude,
-        longitude: position.coords.longitude,
+        latitude: position.coords.latitude.toString(),
+        longitude: position.coords.longitude.toString(),
         photo: url,
       });
-      navigate('/AllLocations');
+      setTimeout(() => {
+        navigate('/AllLocations');
+      }, 1000);
     });
 
     console.log('Added location', newLocation);
@@ -56,6 +60,8 @@ export function Add() {
 
   const handleChange = (ev: any) => {
     setNewLocation({ ...newLocation, [ev.target.name]: ev.target.value });
+    //necesita esperar 1 segundo para mostrar en la lista el cambio correctamente.
+    // de lo contrario mostraría en la lista la modificacion aplicada a todas las localizaciones
   };
 
   return (
@@ -74,6 +80,7 @@ export function Add() {
           id="state"
           value={newLocation.state}
           onChange={handleChange}
+          required
         >
           <option value="Andalucia">Andalucia</option>
           <option value="Aragon">Aragon</option>

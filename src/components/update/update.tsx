@@ -3,6 +3,8 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 //import { Location } from '../../models/location';
+import { getDownloadURL, getStorage, ref, uploadBytes } from 'firebase/storage';
+import { app } from '../../firebase/firebase';
 import { updateLocation } from '../../redux/locations/action-creators';
 import { locationsReducer } from '../../redux/locations/locations-reducers';
 import { update, getDetails } from '../../services/api';
@@ -15,9 +17,12 @@ export function Update() {
 
   const { _id } = useParams();
   const navigate = useNavigate();
+  const storage = getStorage(app);
 
   const detailsURL = `http://localhost:3600/locations/${_id}`;
   console.log(detailsURL);
+
+  const [image, setImage] = useState<any>(null);
 
   const [locationUpdate, setLocationUpdate] = useState({
     _id: '',
@@ -27,9 +32,10 @@ export function Update() {
     latitude: '',
     longitude: '',
     photo: '',
-    author: '',
   });
 
+  // extrae la información de la ID que estamos viendo en detalles, setlocationupdate. La pasa al estado que tengo
+  // justo encima para definir las propiedades disponibles.
   useEffect(() => {
     getDetails(detailsURL).then((resp) => {
       setLocationUpdate(resp.data);
@@ -37,6 +43,7 @@ export function Update() {
     });
   }, []);
 
+  //efectúa los cambios en la api
   const toggleLocation = (newLocation: any) => {
     update(newLocation, user.token).then((resp) =>
       dispatch(updateLocation(resp.data))
@@ -48,6 +55,7 @@ export function Update() {
     }, 1000);
   };
 
+  //ESTADO QUE NO SÉ BIEN LO QUE HACE.
   const [newLocation, setNewLocation] = useState({
     _id: _id,
     state: locationUpdate.state,
@@ -58,23 +66,34 @@ export function Update() {
     photo: locationUpdate.photo,
   });
 
-  const handleSubmit = (ev: any) => {
+  const handleSubmit = async (ev: any) => {
     ev.preventDefault();
+
+    let imageURL = '';
+    const imageRef = ref(storage, image.name);
+    await uploadBytes(imageRef, image);
+    imageURL = await getDownloadURL(imageRef);
+    console.log(imageURL);
+
     navigator.geolocation.getCurrentPosition(
       function (position) {
-        const latitude = position.coords.latitude.toString();
-        const longitude = position.coords.longitude.toString();
-        console.log('Updated location', newLocation);
-        toggleLocation(newLocation);
+        console.log('Latitude is :', position.coords.latitude.toString());
+        console.log('Longitude is :', position.coords.longitude.toString());
+        console.log('La url de la imagen es:', imageURL);
+        newLocation.latitude = position.coords.latitude.toString();
+        newLocation.longitude = position.coords.longitude.toString();
+        newLocation.photo = imageURL;
         setNewLocation({
           _id: _id,
           state: newLocation.state,
           town: newLocation.town,
           comment: newLocation.comment,
+          latitude: newLocation.latitude,
+          longitude: newLocation.longitude,
           photo: newLocation.photo,
-          latitude: latitude,
-          longitude: longitude,
         });
+        toggleLocation(newLocation);
+        console.log('Updated location', newLocation);
       }
       //console.log(setNewLocation);
     );
@@ -98,6 +117,7 @@ export function Update() {
           id="state"
           value={newLocation.state}
           onChange={handleChange}
+          required
         >
           <option value="Andalucia">Andalucia</option>
           <option value="Aragon">Aragon</option>
@@ -123,6 +143,7 @@ export function Update() {
           placeholder="Ciudad de la localización"
           value={newLocation.town}
           onChange={handleChange}
+          required
         />
         <input
           type="text"
@@ -130,6 +151,7 @@ export function Update() {
           placeholder="Comentario de la localización"
           value={newLocation.comment}
           onChange={handleChange}
+          required
         />
         {/* <input
           type="text"
@@ -139,11 +161,10 @@ export function Update() {
           onChange={handleChange}
         /> */}
         <input
-          type="text"
+          type="file"
           name="photo"
-          placeholder="Fotos de la localización"
-          value={newLocation.photo}
-          onChange={handleChange}
+          onChange={(e: any) => setImage(e.target.files[0])}
+          required
         />
         <input
           type="text"
