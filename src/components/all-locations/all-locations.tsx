@@ -31,7 +31,7 @@ export function AllLocations() {
           </ul>
         </>
       ) : (
-        ''
+        'No locations added'
       )}
     </>
   );

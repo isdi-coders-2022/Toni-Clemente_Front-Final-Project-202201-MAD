@@ -1,17 +1,21 @@
 /* eslint-disable react/no-typos */
+import { getDownloadURL, getStorage, ref, uploadBytes } from 'firebase/storage';
+import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Location } from '../../models/location';
 import { createLocation } from '../../redux/locations/action-creators';
 import { set } from '../../services/api';
-//import { coordinates } from '../../services/coordinates';
 import { store } from '../../redux/store'; //añadido, supuestamente soluciona el problema
+import { app } from '../../firebase/firebase';
 type RootState = ReturnType<typeof store.getState>; //añadido, supuestamente soluciona el problema
 
 export function Add() {
   const user = useSelector((state: RootState) => state.user);
+  const storage = getStorage(app);
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const addLocation = (newLocation: any) => {
     set(newLocation, user.token).then((resp) => {
@@ -21,8 +25,15 @@ export function Add() {
 
   const [newLocation, setNewLocation] = useState(new Location());
 
-  const handleSubmit = (ev: any) => {
+  const [image, setImage] = useState<any>(null);
+
+  const handleSubmit = async (ev: any) => {
     ev.preventDefault();
+    let url = '';
+    const imageRef = ref(storage, image.name);
+    await uploadBytes(imageRef, image);
+    url = await getDownloadURL(imageRef);
+    console.log(url);
 
     navigator.geolocation.getCurrentPosition(function (position) {
       console.log('Latitude is :', position.coords.latitude);
@@ -32,7 +43,9 @@ export function Add() {
         author: { _id: user.id, name: user.name },
         latitude: position.coords.latitude,
         longitude: position.coords.longitude,
+        photo: url,
       });
+      navigate('/AllLocations');
     });
 
     console.log('Added location', newLocation);
@@ -80,14 +93,6 @@ export function Add() {
           <option value="Pais Vasco">Pais Vasco</option>
           <option value="Valencia">Valencia</option>
         </select>
-        {/* <input
-          type="text"
-          name="state"
-          placeholder="Provincia de la localización"
-          value={newLocation.state}
-          onChange={handleChange}
-          required
-        /> */}
 
         <input
           type="text"
@@ -107,11 +112,10 @@ export function Add() {
         />
 
         <input
-          type="text"
-          name="photos"
-          placeholder="Fotos de la localización"
-          value={newLocation.photos}
-          onChange={handleChange}
+          type="file"
+          name="photo"
+          placeholder="Foto de la localización"
+          onChange={(e: any) => setImage(e.target.files[0])}
           required
         />
         <input

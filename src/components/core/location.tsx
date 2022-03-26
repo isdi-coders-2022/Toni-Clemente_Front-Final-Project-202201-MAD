@@ -4,7 +4,7 @@ import { store } from '../../redux/store'; //añadido, supuestamente soluciona e
 type RootState = ReturnType<typeof store.getState>; //añadido, supuestamente soluciona el problema
 
 export function Location({ location }: { location: any }) {
-  const user = useSelector((state: RootState) => state.user); // añadido : RootState  al ((state
+  // const user = useSelector((state: RootState) => state.user); // añadido : RootState  al ((state
 
   return (
     <li>
@@ -14,7 +14,7 @@ export function Location({ location }: { location: any }) {
           {location.town}
           {location.comment}
           {location.map}
-          {location.photos}
+          {location.photo}
         </span>{' '}
         -<span>{location.author.name}</span>
       </Link>
