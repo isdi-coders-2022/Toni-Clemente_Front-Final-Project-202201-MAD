@@ -1,0 +1,42 @@
+.location-data {
+  // display: flex;
+  // flex-direction: column;
+  // justify-content: center;
+  //display: inline-block;
+  //overflow: hidden;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  width: 50vw;
+  height: 40vw;
+  margin-bottom: 50px;
+  border-radius: 6px;
+}
+
+.location-data__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.location-data__text {
+  text-align: right;
+  font-size: 1.5vw;
+}
+
+@media (min-width: 600px) {
+  .location-data {
+    //display: inline-block;
+    //overflow: hidden;
+    width: 20vw;
+    height: 20vw;
+    //margin-bottom: 200px;
+  }
+
+  .location-data__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
