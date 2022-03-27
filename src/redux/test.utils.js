@@ -1,3 +1,4 @@
+// test-utils.js
 import React from 'react';
 import { render as rtlRender } from '@testing-library/react';
 import { configureStore } from '@reduxjs/toolkit';
@@ -8,21 +9,20 @@ import { locationsReducer } from './locations/locations-reducers';
 import { userReducer } from './user/user.reducer';
 
 function render(
-  ui: any,
-
+  ui,
   {
-    preloadedState: any,
+    preloadedState,
     store = configureStore({
       reducer: {
         locations: locationsReducer,
         user: userReducer,
       },
-      preloadedState: any,
+      preloadedState,
     }),
     ...renderOptions
   } = {}
 ) {
-  function Wrapper({ children }: { children: any }) {
+  function Wrapper({ children }) {
     return <Provider store={store}>{children}</Provider>;
   }
   return rtlRender(ui, { wrapper: Wrapper, ...renderOptions });
