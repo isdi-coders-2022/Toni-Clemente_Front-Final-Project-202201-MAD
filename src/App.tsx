@@ -1,4 +1,5 @@
 import { Routes, Route } from 'react-router-dom';
+
 import { AllLocations } from './components/all-locations/all-locations';
 import { Home } from './components/home/home';
 import { Add } from './components/add/add';
@@ -8,18 +9,17 @@ import { Menu } from './components/core/menu';
 //import { useSelector } from 'react-redux';
 import './App.css';
 
-import { UserButtons } from './components/core/user-buttons';
-import { store } from './redux/store'; //añadido, supuestamente soluciona el problema
-type RootState = ReturnType<typeof store.getState>; //añadido, supuestamente soluciona el problema
+//import { UserButtons } from './components/core/user-buttons';
+//import { store } from './redux/store'; //añadido, supuestamente soluciona el problema
+//type RootState = ReturnType<typeof store.getState>; //añadido, supuestamente soluciona el problema
 
 function App() {
   // const user = useSelector((state: RootState) => state.user);
   return (
     <div className="App">
       <Menu />
-
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<AllLocations />} />
         <Route path="/home" element={<Home />} />
         <Route path="/add" element={<Add />} />
         <Route path="/allLocations" element={<AllLocations />} />
