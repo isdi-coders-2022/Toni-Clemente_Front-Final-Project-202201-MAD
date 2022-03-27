@@ -1,4 +1,4 @@
-import { render } from '../../redux/test.utils';
+import { render } from '../../redux/test.utils.js';
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { UserButtons } from './user-buttons';
@@ -22,4 +22,25 @@ describe('UserButtons Component', () => {
     render(<UserButtons />, { preloadedState });
     expect(screen.getByText(/Logout/i));
   });
+  test('when register button is pushed', () => {
+    //preloadedState.user.isLogged = true;
+    render(<UserButtons />, { preloadedState });
+    const btn = screen.getByRole('register-button');
+
+    userEvent.click(btn);
+    expect(screen.getByPlaceholderText(/user name/i));
+  });
+  test('when login button is pushed', () => {
+    preloadedState.user.isLogged = false;
+    render(<UserButtons />, { preloadedState });
+    const btn = screen.getByRole('login-button');
+
+    userEvent.click(btn);
+    expect(screen.getByPlaceholderText(/user name/i));
+  });
+
+  // TODO expect
+  // const checkbox = screen.getByRole('checkbox');
+  // userEvent.click(checkbox);
+  // TODO expect
 });

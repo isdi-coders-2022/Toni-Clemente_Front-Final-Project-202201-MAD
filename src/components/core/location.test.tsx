@@ -1,4 +1,4 @@
-import { render } from '../../redux/test.utils';
+import { render } from '../../redux/test.utils.js';
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MemoryRouter } from 'react-router-dom';

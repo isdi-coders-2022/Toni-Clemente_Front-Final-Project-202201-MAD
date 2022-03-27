@@ -27,13 +27,15 @@ export function UserButtons() {
     <div>
       {showRegistration ||
         (!showLogin && (
-          <button onClick={handleLogin}>
+          <button role="login-button" onClick={handleLogin}>
             {user.isLogged ? 'Logout' : 'Login'}
           </button>
         ))}
       {showRegistration ||
         (!showLogin && !user.isLogged && (
-          <button onClick={handleRegistration}>Register</button>
+          <button role="register-button" onClick={handleRegistration}>
+            Register
+          </button>
         ))}
       {showLogin && <UserForm setShowForm={setShowLogin} mode="login" />}
       {showRegistration && (
