@@ -10,7 +10,11 @@ export function Location({ location }: { location: any }) {
   return (
     <Link to={`/details/${location._id}`}>
       <div className="location-data">
-        <img className="location-data__image" src={`${location.photo}`} />
+        <img
+          className="location-data__image"
+          src={`${location.photo}`}
+          alt="location-image"
+        />
         <div className="location-data__text">A location in {location.town}</div>
       </div>
     </Link>

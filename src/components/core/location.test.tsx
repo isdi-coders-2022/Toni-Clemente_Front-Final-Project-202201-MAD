@@ -16,6 +16,7 @@ describe('Location Component', () => {
     location = {
       id: 1,
       title: 'First Location',
+      town: 'Murcia',
       responsible: { name: 'Pepe' },
     };
     preloadedState = {
@@ -33,13 +34,14 @@ describe('Location Component', () => {
       </MemoryRouter>,
       { preloadedState }
     );
-    expect(screen.getByText(/First Location/i));
-    expect(screen.getByText(/Pepe/i));
-    const btn = screen.getByRole('button');
-    userEvent.click(btn);
+    expect(screen.getByText(/Location/i));
+    expect(screen.getByText(/Murcia/i));
+    expect(screen.getByAltText(/location-image/i));
+    // const btn = screen.getByRole('button');
+    // userEvent.click(btn);
     // TODO expect
-    const checkbox = screen.getByRole('checkbox');
-    userEvent.click(checkbox);
+    // const checkbox = screen.getByRole('checkbox');
+    // userEvent.click(checkbox);
     // TODO expect
   });
 });
