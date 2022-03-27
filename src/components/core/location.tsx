@@ -16,27 +16,3 @@ export function Location({ location }: { location: any }) {
     </Link>
   );
 }
-
-/* export function Task({task, deleteTask}) {
-    return (
-        <li>
-            <div>{task}</div>
-        </li>
-    );
-} */
-
-// {
-//   location.state;
-// }
-// {
-//   location.town;
-// }
-// {
-//   location.comment;
-// }
-// {
-//   location.map;
-// }
-// {
-//   location.photo;
-// }
