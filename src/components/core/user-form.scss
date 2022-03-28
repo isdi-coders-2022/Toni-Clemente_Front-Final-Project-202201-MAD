@@ -1,0 +1,27 @@
+.login-button,
+.cancel-button,
+input[type="submit"] {
+  border: 1px solid rgb(7, 4, 1);
+  margin-top: 3.4vw;
+  transition: all 100ms;
+  font-size: 4vw;
+  font-family: arial, verdana;
+  color: rgb(211, 207, 207);
+  border-radius: 6px;
+  background: rgb(48, 25, 7);
+  padding: 10px;
+  margin-left: 15px;
+}
+
+input[type="text"],
+input[type="password"] {
+  margin-top: 4vw;
+  border: 1px solid grey;
+  transition: all 100ms;
+  font-size: 4vw;
+  font-family: arial, verdana;
+  color: black;
+  border-radius: 6px;
+  background: rgb(138, 202, 141);
+  font-weight: bold;
+}

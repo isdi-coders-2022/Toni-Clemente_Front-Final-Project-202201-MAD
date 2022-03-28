@@ -89,9 +89,10 @@ export function Add() {
           id="state"
           value={newLocation.state}
           onChange={handleChange}
+          className="state-add"
           required
         >
-          <option>Choose region</option>
+          <option value="">Choose region</option>
           <option value="Andalucia">Andalucia</option>
           <option value="Aragon">Aragon</option>
           <option value="Asturias">Asturias</option>
@@ -118,6 +119,7 @@ export function Add() {
           value={newLocation.town}
           onChange={handleChange}
           maxLength={25}
+          className="town-add"
           required
         />
         {/* <input
@@ -139,6 +141,7 @@ export function Add() {
           value={newLocation.comment}
           onChange={handleChange}
           maxLength={180}
+          className="comment-add"
           required
         >
           Write a comment here

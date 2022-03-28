@@ -1,24 +1,13 @@
-.button {
-  border: 1px solid rgb(58, 33, 12);
-  margin-top: 30px;
+.register-button,
+.login-button {
+  border: 1px solid rgb(7, 4, 1);
+  margin-top: 3.4vw;
   transition: all 100ms;
-  font-size: 20px;
+  font-size: 4vw;
   font-family: arial, verdana;
-  color: black;
+  color: rgb(211, 207, 207);
   border-radius: 6px;
-  background: rgb(99, 52, 14);
-  font-weight: bold;
-}
-
-input[type="text"],
-input[type="password"] {
-  border: 1px solid grey;
-  margin-top: 30px;
-  transition: all 100ms;
-  font-size: 20px;
-  font-family: arial, verdana;
-  color: black;
-  border-radius: 6px;
-  background: rgb(138, 202, 141);
-  font-weight: bold;
+  background: rgb(48, 25, 7);
+  padding: 10px;
+  margin-left: 15px;
 }
