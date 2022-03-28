@@ -1,13 +1,16 @@
 /* eslint-disable react/no-typos */
-import { getDownloadURL, getStorage, ref, uploadBytes } from 'firebase/storage';
-import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Location } from '../../models/location';
-import { createLocation } from '../../redux/locations/action-creators';
-import { set } from '../../services/api';
-import { app } from '../../firebase/firebase';
-import { store } from '../../redux/store'; //añadido, supuestamente soluciona el problema
+import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Location } from "../../models/location";
+import { createLocation } from "../../redux/locations/action-creators";
+import { set } from "../../services/api";
+import { app } from "../../firebase/firebase";
+import { store } from "../../redux/store"; //añadido, supuestamente soluciona el problema
+
+import "firebaseui/dist/firebaseui.css";
+import "./add.scss";
 
 type RootState = ReturnType<typeof store.getState>; //añadido, supuestamente soluciona el problema
 
@@ -31,15 +34,15 @@ export function Add() {
   const handleSubmit = async (ev: any) => {
     ev.preventDefault();
 
-    let url = '';
+    let url = "";
     const imageRef = ref(storage, image.name);
     await uploadBytes(imageRef, image);
     url = await getDownloadURL(imageRef);
     console.log(url);
 
     navigator.geolocation.getCurrentPosition(function (position) {
-      console.log('Latitude is :', position.coords.latitude);
-      console.log('Longitude is :', position.coords.longitude);
+      console.log("Latitude is :", position.coords.latitude);
+      console.log("Longitude is :", position.coords.longitude);
       addLocation({
         ...newLocation,
         author: { _id: user.id, name: user.name },
@@ -48,11 +51,11 @@ export function Add() {
         photo: url,
       });
       setTimeout(() => {
-        navigate('/AllLocations');
+        navigate("/AllLocations");
       }, 1000);
     });
 
-    console.log('Added location', newLocation);
+    console.log("Added location", newLocation);
 
     //addTask({ ...newTask, responsible: { _id: user.id, name: user.userName } });
     setNewLocation(new Location());
@@ -68,12 +71,18 @@ export function Add() {
     <>
       <h2>Add Location</h2>
       <p>
-        Have you found a beautiful location into the wild? Please let us know.
+        Have you found a beautiful location into the wild? Just add it here.
+        Your current location will be saved, so that you or others can visit it
+        anytime.
       </p>
       <p>
-        Your current location will be sent as soon as you push the Add button.
+        Please allow your web bowser to share your location if you're asked to.
       </p>
-      <p>Please allow your web bowser if you're asked to.</p>
+      <br />
+      <p>
+        First, let us know about the region where you are and the closest city
+        to your location.
+      </p>
       <form onSubmit={handleSubmit}>
         <select
           name="state"
@@ -82,6 +91,7 @@ export function Add() {
           onChange={handleChange}
           required
         >
+          <option>Choose region</option>
           <option value="Andalucia">Andalucia</option>
           <option value="Aragon">Aragon</option>
           <option value="Asturias">Asturias</option>
@@ -104,20 +114,40 @@ export function Add() {
         <input
           type="text"
           name="town"
-          placeholder="Ciudad de la localización"
+          placeholder="Location town"
           value={newLocation.town}
           onChange={handleChange}
+          maxLength={25}
           required
         />
-        <input
+        {/* <input
           type="text"
           name="comment"
           placeholder="Comentario de la localización"
           value={newLocation.comment}
           onChange={handleChange}
           required
-        />
+        /> */}
 
+        <p>
+          Then tell us about the beauty of your location, how you reached it,
+          possibilities for camping, caravanning... or just tell us whatever you
+          want about it!
+        </p>
+        <textarea
+          name="comment"
+          value={newLocation.comment}
+          onChange={handleChange}
+          maxLength={180}
+          required
+        >
+          Write a comment here
+        </textarea>
+
+        <p>
+          Finally, just add a photograph of your location. A good representation
+          of it.
+        </p>
         <input
           type="file"
           name="photo"
@@ -125,14 +155,11 @@ export function Add() {
           onChange={(e: any) => setImage(e.target.files[0])}
           required
         />
-        <input
-          type="text"
-          name="author"
-          placeholder="Usuario que subió la localización"
-          value={user.name}
-          readOnly
-        />
-        <button type="submit">Add</button>
+        <br />
+
+        <button type="submit" role="submit" className="button-add">
+          Add
+        </button>
       </form>
     </>
   );

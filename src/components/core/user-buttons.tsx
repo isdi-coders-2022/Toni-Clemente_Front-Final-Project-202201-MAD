@@ -1,8 +1,8 @@
-import { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { UserForm } from './user-form';
-import * as actions from '../../redux/user/action-creators';
-import { store } from '../../redux/store'; //añadido, supuestamente soluciona el problema
+import { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { UserForm } from "./user-form";
+import * as actions from "../../redux/user/action-creators";
+import { store } from "../../redux/store"; //añadido, supuestamente soluciona el problema
 type RootState = ReturnType<typeof store.getState>; //añadido, supuestamente soluciona el problema
 
 export function UserButtons() {
@@ -27,13 +27,17 @@ export function UserButtons() {
     <div>
       {showRegistration ||
         (!showLogin && (
-          <button role="login-button" onClick={handleLogin}>
-            {user.isLogged ? 'Logout' : 'Login'}
+          <button className="button" role="login-button" onClick={handleLogin}>
+            {user.isLogged ? "Logout" : "Login"}
           </button>
         ))}
       {showRegistration ||
         (!showLogin && !user.isLogged && (
-          <button role="register-button" onClick={handleRegistration}>
+          <button
+            className="button"
+            role="register-button"
+            onClick={handleRegistration}
+          >
             Register
           </button>
         ))}

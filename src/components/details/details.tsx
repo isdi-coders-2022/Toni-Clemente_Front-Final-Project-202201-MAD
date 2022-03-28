@@ -1,33 +1,33 @@
-import { useParams, Link, useNavigate } from 'react-router-dom';
-import { useEffect, useState } from 'react';
-import { getDetails, remove } from '../../services/api';
-import { useSelector, useDispatch } from 'react-redux';
-import { removeLocation } from '../../redux/locations/action-creators';
-import { store } from '../../redux/store'; //añadido, supuestamente soluciona el problema
+import { useParams, Link, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { getDetails, remove } from "../../services/api";
+import { useSelector, useDispatch } from "react-redux";
+import { removeLocation } from "../../redux/locations/action-creators";
+import { store } from "../../redux/store"; //añadido, supuestamente soluciona el problema
 type RootState = ReturnType<typeof store.getState>; //añadido, supuestamente soluciona el problema
 
-import './details.scss';
+import "./details.scss";
 
 export function Details() {
   const user = useSelector((state: RootState) => state.user); // añadido : RootState  al ((state
-  //const dispatch = useDispatch();
+
   const { _id } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  let gmapsLink = '';
+  let gmapsLink = "";
 
   const detailsURL = `http://localhost:3600/locations/${_id}`;
   console.log(detailsURL);
 
   const [locationDetails, setLocationDetails] = useState({
-    _id: '',
-    state: '',
-    town: '',
-    comment: '',
-    latitude: '',
-    longitude: '',
-    photo: '',
-    author: { name: '' },
+    _id: "",
+    state: "",
+    town: "",
+    comment: "",
+    latitude: "",
+    longitude: "",
+    photo: "",
+    author: { name: "" },
   });
 
   useEffect(() => {
@@ -39,10 +39,10 @@ export function Details() {
 
   const deleteLocation = () => {
     remove(locationDetails._id, user.token).then((resp) => {
-      if (resp.statusText.toLowerCase() === 'ok') {
+      if (resp.statusText.toLowerCase() === "ok") {
         dispatch(removeLocation(locationDetails._id));
       }
-      navigate('/AllLocations');
+      navigate("/AllLocations");
     });
   };
 
@@ -56,7 +56,7 @@ export function Details() {
       const origLatitude = position.coords.latitude.toString();
       const origLongitude = position.coords.longitude.toString();
       gmapsLink = `https://www.google.com/maps/dir/?api=1&origin=${origLatitude},${origLongitude}&destination=${locationDetails.latitude},${locationDetails.longitude}`;
-      window.open(gmapsLink, '_newtab');
+      window.open(gmapsLink, "_newtab");
     });
   }
 
@@ -79,13 +79,19 @@ export function Details() {
       </div>
       <div className="buttons">
         <Link to={`/update/${locationDetails._id}`}>
-          <button type="button" role="button" tabIndex={0}>
+          <button
+            type="button"
+            role="button"
+            className="button-details"
+            tabIndex={0}
+          >
             Change information
           </button>
         </Link>
         <button
           type="button"
           role="button"
+          className="button-details"
           tabIndex={0}
           onClick={handleClick}
           onKeyPress={handleClick}
@@ -96,6 +102,7 @@ export function Details() {
         <button
           type="button"
           role="button"
+          className="button-details"
           tabIndex={0}
           onClick={handleClickLink}
           onKeyPress={handleClickLink}
