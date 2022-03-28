@@ -1,7 +1,6 @@
-select,
-input[type="text"],
-input[type="password"],
-textarea {
+.state-add,
+.town-add,
+.comment-add {
   border: 1px solid grey;
   transition: all 100ms;
   font-size: 3.5vw;
@@ -12,7 +11,7 @@ textarea {
   font-weight: bold;
 }
 
-textarea {
+.comment-add {
   height: 20vw;
   width: 50vw;
 }

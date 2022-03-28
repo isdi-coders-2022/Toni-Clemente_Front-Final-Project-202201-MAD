@@ -1,7 +1,9 @@
-import { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { login, register } from '../../services/user';
-import * as actions from '../../redux/user/action-creators';
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { login, register } from "../../services/user";
+import * as actions from "../../redux/user/action-creators";
+
+import "./user-form.scss";
 
 export function UserForm({
   setShowForm,
@@ -10,7 +12,7 @@ export function UserForm({
   setShowForm: any;
   mode: any;
 }) {
-  const [user, setUser] = useState({ name: '', passwd: '' });
+  const [user, setUser] = useState({ name: "", passwd: "" });
   const dispatch = useDispatch();
 
   const handleChange = (ev: any) => {
@@ -22,7 +24,7 @@ export function UserForm({
 
     try {
       let result;
-      if (mode.toLowerCase() === 'login') {
+      if (mode.toLowerCase() === "login") {
         result = await login(user);
       } else {
         result = await register(user);
@@ -59,10 +61,10 @@ export function UserForm({
       />
       <br />
 
-      <button type="submit" onClick={handleSubmit}>
-        {mode.toLowerCase() === 'login' ? 'Login' : 'Register'}
+      <button type="submit" className="login-button" onClick={handleSubmit}>
+        {mode.toLowerCase() === "login" ? "Login" : "Register"}
       </button>
-      <button type="reset" onClick={handleCancel}>
+      <button type="reset" className="cancel-button" onClick={handleCancel}>
         Cancel
       </button>
     </form>

@@ -5,6 +5,8 @@ import * as actions from "../../redux/user/action-creators";
 import { store } from "../../redux/store"; //añadido, supuestamente soluciona el problema
 type RootState = ReturnType<typeof store.getState>; //añadido, supuestamente soluciona el problema
 
+import "./user-buttons.scss";
+
 export function UserButtons() {
   const user = useSelector((state: RootState) => state.user);
   const dispatch = useDispatch();
@@ -27,14 +29,18 @@ export function UserButtons() {
     <div>
       {showRegistration ||
         (!showLogin && (
-          <button className="button" role="login-button" onClick={handleLogin}>
+          <button
+            role="login-button"
+            className="login-button"
+            onClick={handleLogin}
+          >
             {user.isLogged ? "Logout" : "Login"}
           </button>
         ))}
       {showRegistration ||
         (!showLogin && !user.isLogged && (
           <button
-            className="button"
+            className="register-button"
             role="register-button"
             onClick={handleRegistration}
           >

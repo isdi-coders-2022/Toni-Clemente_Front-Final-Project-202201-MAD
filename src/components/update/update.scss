@@ -1,7 +1,6 @@
-select,
-input[type="text"],
-input[type="password"],
-textarea {
+.state-update,
+.town-update,
+.comment-update {
   border: 1px solid grey;
   transition: all 100ms;
   font-size: 3.5vw;

@@ -11,6 +11,8 @@ import { update, getDetails } from "../../services/api";
 import { store } from "../../redux/store"; //añadido, supuestamente soluciona el problema
 type RootState = ReturnType<typeof store.getState>; //añadido, supuestamente soluciona el problema
 
+import "./update.scss";
+
 export function Update() {
   const user = useSelector((state: RootState) => state.user);
   const dispatch = useDispatch();
@@ -112,46 +114,52 @@ export function Update() {
       </p>
 
       <form onSubmit={handleSubmit}>
-        <select
-          name="state"
-          id="state"
-          value={newLocation.state}
-          onChange={handleChange}
-          required
-        >
-          <option>Choose region</option>
-          <option value="Andalucia">Andalucia</option>
-          <option value="Aragon">Aragon</option>
-          <option value="Asturias">Asturias</option>
-          <option value="Baleares">Baleares</option>
-          <option value="Canarias">Canarias</option>
-          <option value="Cantabria">Cantabria</option>
-          <option value="Castilla La Mancha">Castilla La Mancha</option>
-          <option value="Castilla y Leon">Castilla Leon</option>
-          <option value="Cataluña">Cataluña</option>
-          <option value="Extremadura">Extremadura</option>
-          <option value="Galicia">Galicia</option>
-          <option value="La Rioja">La Rioja</option>
-          <option value="Murcia">Murcia</option>
-          <option value="Madrid">Madrid</option>
-          <option value="Navarra">Navarra</option>
-          <option value="Pais Vasco">Pais Vasco</option>
-          <option value="Valencia">Valencia</option>
-        </select>
-        <input
-          type="text"
-          name="town"
-          placeholder="Ciudad de la localización"
-          value={newLocation.town}
-          onChange={handleChange}
-          maxLength={25}
-          required
-        />
+        <div className="region">
+          <select
+            name="state"
+            id="state"
+            value={newLocation.state}
+            onChange={handleChange}
+            className="state-update"
+            required
+          >
+            <option>Choose region</option>
+            <option value="Andalucia">Andalucia</option>
+            <option value="Aragon">Aragon</option>
+            <option value="Asturias">Asturias</option>
+            <option value="Baleares">Baleares</option>
+            <option value="Canarias">Canarias</option>
+            <option value="Cantabria">Cantabria</option>
+            <option value="Castilla La Mancha">Castilla La Mancha</option>
+            <option value="Castilla y Leon">Castilla Leon</option>
+            <option value="Cataluña">Cataluña</option>
+            <option value="Extremadura">Extremadura</option>
+            <option value="Galicia">Galicia</option>
+            <option value="La Rioja">La Rioja</option>
+            <option value="Murcia">Murcia</option>
+            <option value="Madrid">Madrid</option>
+            <option value="Navarra">Navarra</option>
+            <option value="Pais Vasco">Pais Vasco</option>
+            <option value="Valencia">Valencia</option>
+          </select>
+          <input
+            type="text"
+            name="town"
+            placeholder="Ciudad de la localización"
+            value={newLocation.town}
+            onChange={handleChange}
+            maxLength={25}
+            className="town-update"
+            required
+          />
+        </div>
+
         <textarea
           name="comment"
           value={newLocation.comment}
           onChange={handleChange}
           maxLength={180}
+          className="comment-update"
           required
         >
           Write a comment here
@@ -163,13 +171,7 @@ export function Update() {
           onChange={(e: any) => setImage(e.target.files[0])}
           required
         />
-        <input
-          type="text"
-          name="_id"
-          placeholder="id de la localización"
-          value={newLocation._id}
-          readOnly
-        />
+        <br />
 
         <button type="submit" className="button-update">
           Modify
