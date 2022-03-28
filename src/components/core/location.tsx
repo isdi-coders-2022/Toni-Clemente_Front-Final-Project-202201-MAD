@@ -1,8 +1,8 @@
-import { Link } from 'react-router-dom';
-import { store } from '../../redux/store'; //añadido, supuestamente soluciona el problema
+import { Link } from "react-router-dom";
+import { store } from "../../redux/store"; //añadido, supuestamente soluciona el problema
 type RootState = ReturnType<typeof store.getState>; //añadido, supuestamente soluciona el problema
 
-import './location.scss';
+import "./location.scss";
 
 export function Location({ location }: { location: any }) {
   // const user = useSelector((state: RootState) => state.user); // añadido : RootState  al ((state

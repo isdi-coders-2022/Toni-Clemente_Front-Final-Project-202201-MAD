@@ -2,7 +2,7 @@
 .cancel-button,
 input[type="submit"] {
   border: 1px solid rgb(7, 4, 1);
-  margin-top: 3.4vw;
+  margin-top: 1vw;
   transition: all 100ms;
   font-size: 4vw;
   font-family: arial, verdana;
@@ -15,10 +15,10 @@ input[type="submit"] {
 
 input[type="text"],
 input[type="password"] {
-  margin-top: 4vw;
   border: 1px solid grey;
   transition: all 100ms;
   font-size: 4vw;
+  margin-top: 2.5vw;
   font-family: arial, verdana;
   color: black;
   border-radius: 6px;

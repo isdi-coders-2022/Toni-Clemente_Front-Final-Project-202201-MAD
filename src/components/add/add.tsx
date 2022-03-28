@@ -15,34 +15,51 @@ import "./add.scss";
 type RootState = ReturnType<typeof store.getState>; //añadido, supuestamente soluciona el problema
 
 export function Add() {
+  // se revisa el estado del usuario
   const user = useSelector((state: RootState) => state.user);
-  const storage = getStorage(app);
 
+  // se declaran los métodos que vamos a utilizar en este componente
+  const storage = getStorage(app);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  //añade una localización. Se pasa la localización, se comprueba que el usuario tiene token
   const addLocation = (newLocation: any) => {
     set(newLocation, user.token).then((resp) => {
       dispatch(createLocation(resp.data));
     });
   };
 
+  //estado para añadir una nueva localización
   const [newLocation, setNewLocation] = useState(new Location());
 
+  //estado para añadir una imagen usando firebase
   const [image, setImage] = useState<any>(null);
 
+  //al enviar el formulario con el botón submit, en las primeras lineas de código
   const handleSubmit = async (ev: any) => {
     ev.preventDefault();
 
+    //estas lineas se encargan de manejar firebase. Hacen la llamada...
     let url = "";
     const imageRef = ref(storage, image.name);
     await uploadBytes(imageRef, image);
     url = await getDownloadURL(imageRef);
     console.log(url);
 
+    //esta línea toma la geolocalización del usuario. De aquí se puede extraer la longitud y la
+    // latitud.
     navigator.geolocation.getCurrentPosition(function (position) {
       console.log("Latitude is :", position.coords.latitude);
       console.log("Longitude is :", position.coords.longitude);
+
+      //Al añadir una nueva localización, desestructuramos newLocation donde están almacenadas
+      //las propiedades que el usuario ha añadido a través del formulario.
+      //a continuación le añadimos a la localización la propiedad autor. El autor es el propio
+      // usuario que ha añadido al localización. Se toma su id y su nombre.
+      // Se toma la latitud y la longitud que habíamos obtenido con navigator y se pasa como
+      // propiedad a newLocation
+      // Se pasa por último la foto almacenada en firebase.
       addLocation({
         ...newLocation,
         author: { _id: user.id, name: user.name },
@@ -50,6 +67,8 @@ export function Add() {
         longitude: position.coords.longitude.toString(),
         photo: url,
       });
+      // Al añadirse un nueva localización, se vuelve automáticamente a la página de todas las
+      // localizaciones. He añadido un
       setTimeout(() => {
         navigate("/AllLocations");
       }, 1000);
@@ -61,10 +80,9 @@ export function Add() {
     setNewLocation(new Location());
   };
 
+  //desestructura newLocation y va añadiendo lo que ponga el usuario.
   const handleChange = (ev: any) => {
     setNewLocation({ ...newLocation, [ev.target.name]: ev.target.value });
-    //necesita esperar 1 segundo para mostrar en la lista el cambio correctamente.
-    // de lo contrario mostraría en la lista la modificacion aplicada a todas las localizaciones
   };
 
   return (
@@ -118,7 +136,7 @@ export function Add() {
           placeholder="Location town"
           value={newLocation.town}
           onChange={handleChange}
-          maxLength={25}
+          maxLength={18}
           className="town-add"
           required
         />
@@ -140,7 +158,7 @@ export function Add() {
           name="comment"
           value={newLocation.comment}
           onChange={handleChange}
-          maxLength={180}
+          maxLength={140}
           className="comment-add"
           required
         >
