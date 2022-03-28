@@ -1,14 +1,14 @@
-import { Link } from 'react-router-dom';
-import { UserButtons } from './user-buttons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Link } from "react-router-dom";
+import { UserButtons } from "./user-buttons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faHouse,
   faBookmark,
   faTree,
   faCirclePlus,
-} from '@fortawesome/free-solid-svg-icons';
+} from "@fortawesome/free-solid-svg-icons";
 
-import './menu.scss';
+import "./menu.scss";
 
 export function Menu() {
   return (

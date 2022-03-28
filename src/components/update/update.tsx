@@ -148,7 +148,7 @@ export function Update() {
             placeholder="Ciudad de la localización"
             value={newLocation.town}
             onChange={handleChange}
-            maxLength={25}
+            maxLength={18}
             className="town-update"
             required
           />
@@ -158,7 +158,7 @@ export function Update() {
           name="comment"
           value={newLocation.comment}
           onChange={handleChange}
-          maxLength={180}
+          maxLength={140}
           className="comment-update"
           required
         >
