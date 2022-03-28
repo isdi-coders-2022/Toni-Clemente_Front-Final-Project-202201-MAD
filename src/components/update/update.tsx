@@ -1,14 +1,14 @@
 /* eslint-disable react/no-typos */
-import { useParams, useNavigate } from 'react-router-dom';
-import { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useParams, useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 //import { Location } from '../../models/location';
-import { getDownloadURL, getStorage, ref, uploadBytes } from 'firebase/storage';
-import { app } from '../../firebase/firebase';
-import { updateLocation } from '../../redux/locations/action-creators';
-import { locationsReducer } from '../../redux/locations/locations-reducers';
-import { update, getDetails } from '../../services/api';
-import { store } from '../../redux/store'; //añadido, supuestamente soluciona el problema
+import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
+import { app } from "../../firebase/firebase";
+import { updateLocation } from "../../redux/locations/action-creators";
+import { locationsReducer } from "../../redux/locations/locations-reducers";
+import { update, getDetails } from "../../services/api";
+import { store } from "../../redux/store"; //añadido, supuestamente soluciona el problema
 type RootState = ReturnType<typeof store.getState>; //añadido, supuestamente soluciona el problema
 
 export function Update() {
@@ -25,13 +25,13 @@ export function Update() {
   const [image, setImage] = useState<any>(null);
 
   const [locationUpdate, setLocationUpdate] = useState({
-    _id: '',
-    state: '',
-    town: '',
-    comment: '',
-    latitude: '',
-    longitude: '',
-    photo: '',
+    _id: "",
+    state: "",
+    town: "",
+    comment: "",
+    latitude: "",
+    longitude: "",
+    photo: "",
   });
 
   // extrae la información de la ID que estamos viendo en detalles, setlocationupdate. La pasa al estado que tengo
@@ -51,7 +51,7 @@ export function Update() {
     //necesita esperar 1 segundo para mostrar en la lista el cambio correctamente.
     // de lo contrario mostraría en la lista la modificacion aplicada a todas las localizaciones
     setTimeout(() => {
-      navigate('/AllLocations');
+      navigate("/AllLocations");
     }, 1000);
   };
 
@@ -69,7 +69,7 @@ export function Update() {
   const handleSubmit = async (ev: any) => {
     ev.preventDefault();
 
-    let imageURL = '';
+    let imageURL = "";
     const imageRef = ref(storage, image.name);
     await uploadBytes(imageRef, image);
     imageURL = await getDownloadURL(imageRef);
@@ -77,9 +77,9 @@ export function Update() {
 
     navigator.geolocation.getCurrentPosition(
       function (position) {
-        console.log('Latitude is :', position.coords.latitude.toString());
-        console.log('Longitude is :', position.coords.longitude.toString());
-        console.log('La url de la imagen es:', imageURL);
+        console.log("Latitude is :", position.coords.latitude.toString());
+        console.log("Longitude is :", position.coords.longitude.toString());
+        console.log("La url de la imagen es:", imageURL);
         newLocation.latitude = position.coords.latitude.toString();
         newLocation.longitude = position.coords.longitude.toString();
         newLocation.photo = imageURL;
@@ -93,7 +93,7 @@ export function Update() {
           photo: newLocation.photo,
         });
         toggleLocation(newLocation);
-        console.log('Updated location', newLocation);
+        console.log("Updated location", newLocation);
       }
       //console.log(setNewLocation);
     );
@@ -119,6 +119,7 @@ export function Update() {
           onChange={handleChange}
           required
         >
+          <option>Choose region</option>
           <option value="Andalucia">Andalucia</option>
           <option value="Aragon">Aragon</option>
           <option value="Asturias">Asturias</option>
@@ -143,23 +144,19 @@ export function Update() {
           placeholder="Ciudad de la localización"
           value={newLocation.town}
           onChange={handleChange}
+          maxLength={25}
           required
         />
-        <input
-          type="text"
+        <textarea
           name="comment"
-          placeholder="Comentario de la localización"
           value={newLocation.comment}
           onChange={handleChange}
+          maxLength={180}
           required
-        />
-        {/* <input
-          type="text"
-          name="map"
-          placeholder="Mapa de la localización"
-          value={newLocation.map}s
-          onChange={handleChange}
-        /> */}
+        >
+          Write a comment here
+        </textarea>
+
         <input
           type="file"
           name="photo"
@@ -174,7 +171,9 @@ export function Update() {
           readOnly
         />
 
-        <button type="submit">Modify</button>
+        <button type="submit" className="button-update">
+          Modify
+        </button>
       </form>
     </>
   );

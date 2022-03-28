@@ -1,0 +1,42 @@
+select,
+input[type="text"],
+input[type="password"],
+textarea {
+  border: 1px solid grey;
+  transition: all 100ms;
+  font-size: 3.5vw;
+  font-family: arial, verdana;
+  color: black;
+  border-radius: 6px;
+  background: rgb(138, 202, 141);
+  font-weight: bold;
+}
+
+textarea {
+  height: 20vw;
+  width: 50vw;
+}
+
+.button-add {
+  border: 1px solid rgb(7, 4, 1);
+  margin-top: 30px;
+  transition: all 100ms;
+  font-size: 20px;
+  font-family: arial, verdana;
+  color: rgb(211, 207, 207);
+  border-radius: 6px;
+  background: rgb(48, 25, 7);
+  padding: 10px;
+  margin-left: 15px;
+}
+
+p {
+  font-size: 3vw;
+  padding-left: 7vw;
+  padding-right: 7vw;
+  margin-top: 6vw;
+}
+
+h2 {
+  font-size: 5vw;
+}
