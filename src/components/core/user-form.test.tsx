@@ -1,6 +1,5 @@
 import { render } from "../../redux/test.utils.js";
 import { screen } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
 import { UserForm } from "./user-form";
 
 describe("UserForm Component", () => {
