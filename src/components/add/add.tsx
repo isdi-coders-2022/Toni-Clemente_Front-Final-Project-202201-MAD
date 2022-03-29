@@ -9,7 +9,6 @@ import { set } from "../../services/api";
 import { app } from "../../firebase/firebase";
 import { store } from "../../redux/store"; //añadido, supuestamente soluciona el problema
 
-import "firebaseui/dist/firebaseui.css";
 import "./add.scss";
 
 type RootState = ReturnType<typeof store.getState>; //añadido, supuestamente soluciona el problema
@@ -18,12 +17,12 @@ export function Add() {
   // se revisa el estado del usuario
   const user = useSelector((state: RootState) => state.user);
 
-  // se declaran los métodos que vamos a utilizar en este componente
   const storage = getStorage(app);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  //añade una localización. Se pasa la localización, se comprueba que el usuario tiene token
+  //añade una localización. Se pasa la localización a través de la api (services), se comprueba que el usuario tiene token.
+  // Se despacha al estado con dispatch.
   const addLocation = (newLocation: any) => {
     set(newLocation, user.token).then((resp) => {
       dispatch(createLocation(resp.data));
@@ -36,11 +35,12 @@ export function Add() {
   //estado para añadir una imagen usando firebase
   const [image, setImage] = useState<any>(null);
 
-  //al enviar el formulario con el botón submit, en las primeras lineas de código
+  //al enviar el formulario con el botón submit, en las primeras lineas de código.
+  // usamos preventdefault para que no refresque la página.
   const handleSubmit = async (ev: any) => {
     ev.preventDefault();
 
-    //estas lineas se encargan de manejar firebase. Hacen la llamada...
+    //estas lineas se encargan de manejar firebase. Hacen la llamada al servidor de firebase
     let url = "";
     const imageRef = ref(storage, image.name);
     await uploadBytes(imageRef, image);
@@ -50,8 +50,8 @@ export function Add() {
     //esta línea toma la geolocalización del usuario. De aquí se puede extraer la longitud y la
     // latitud.
     navigator.geolocation.getCurrentPosition(function (position) {
-      console.log("Latitude is :", position.coords.latitude);
-      console.log("Longitude is :", position.coords.longitude);
+      // console.log("Latitude is :", position.coords.latitude);
+      // console.log("Longitude is :", position.coords.longitude);
 
       //Al añadir una nueva localización, desestructuramos newLocation donde están almacenadas
       //las propiedades que el usuario ha añadido a través del formulario.
@@ -76,12 +76,11 @@ export function Add() {
 
     console.log("Added location", newLocation);
 
-    // dejado como referencia al proyecto anterior
-    // addTask({ ...newTask, responsible: { _id: user.id, name: user.userName } });
-    setNewLocation(new Location());
+    //Limpia el formulario, comento por innecesario.
+    //setNewLocation(new Location());
   };
 
-  //desestructura newLocation y va añadiendo lo que ponga el usuario.
+  // Desestructura newLocation y va añadiendo lo que ponga el usuario.
   const handleChange = (ev: any) => {
     setNewLocation({ ...newLocation, [ev.target.name]: ev.target.value });
   };
@@ -141,14 +140,6 @@ export function Add() {
           className="town-add"
           required
         />
-        {/* <input
-          type="text"
-          name="comment"
-          placeholder="Comentario de la localización"
-          value={newLocation.comment}
-          onChange={handleChange}
-          required
-        /> */}
 
         <p>
           Then tell us about the beauty of your location, how you reached it,

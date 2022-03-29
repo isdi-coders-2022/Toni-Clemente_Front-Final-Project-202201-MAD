@@ -1,13 +1,12 @@
 import { render } from "../../redux/test.utils.js";
 import { screen } from "@testing-library/react";
-import { MemoryRouter as Router } from "react-router-dom";
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 import { app } from "../../firebase/firebase";
 //import firebase from "firebase/app";
 import userEvent from "@testing-library/user-event";
 import firebase from "@firebase/analytics";
 
-import { Details } from "./details";
+import { Update } from "./update";
 
 // si no hago esto, jest da error al testear update: "useNavigate() may be used only in
 // the context of a <Router> component"
@@ -32,19 +31,16 @@ describe("Update Component", () => {
       locations: [
         {
           id: 1,
-          town: "Murcia",
+          name: "First Location",
+          responsible: "Pepe",
         },
       ],
-      user: { name: "Toni" },
+      user: { name: "Pepe" },
     };
   });
   test("should be rendered", () => {
-    render(
-      <Router>
-        <Details />,
-      </Router>
-    );
-    expect(screen.getAllByText(/A location in/i));
+    render(<Update />, { preloadedState });
+    expect(screen.getByText(/Update location/i));
   });
   // test("when add button is pushed", () => {
   //   render(<Add />, { preloadedState });

@@ -1,13 +1,13 @@
-import { Location } from '../core/location';
-import { useSelector, useDispatch } from 'react-redux';
-import { useEffect } from 'react';
-import { loadLocations } from '../../redux/locations/action-creators';
+import { Location } from "../core/location";
+import { useSelector, useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { loadLocations } from "../../redux/locations/action-creators";
 //import { LOCATIONS } from '../../models/locations.data';
-import { getAll } from '../../services/api';
-import { store } from '../../redux/store'; //añadido, supuestamente soluciona el problema
+import { getAll } from "../../services/api";
+import { store } from "../../redux/store"; //añadido, supuestamente soluciona el problema
 type RootState = ReturnType<typeof store.getState>; //añadido, supuestamente soluciona el problema
 
-import './all-locations.scss';
+import "./all-locations.scss";
 
 export function AllLocations() {
   const locations = useSelector((state: RootState) => state.locations); //añadido state: RootState, supuestamente soluciona el problema
@@ -33,7 +33,7 @@ export function AllLocations() {
           </div>
         </>
       ) : (
-        'No locations added'
+        "No locations added"
       )}
     </>
   );

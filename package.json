@@ -72,5 +72,18 @@
     "eslint-plugin-jsx-a11y": "^6.5.1",
     "eslint-plugin-react": "^7.29.4",
     "eslint-plugin-react-hooks": "^4.3.0"
+  },
+  "jest": {
+    "collectCoverageFrom": [
+      "src/**/*.{ts,tsx}",
+      "!src/index.tsx",
+      "!src/redux/test-utils.js",
+      "!src/setupTests.ts",
+      "!src/reportWebVitals.ts",
+      "!src/react-app-env.d.ts",
+      "!src/firebase/firebase.ts",
+      "!src/models/location.ts",
+      "!src/models/locations.data.ts"
+    ]
   }
 }

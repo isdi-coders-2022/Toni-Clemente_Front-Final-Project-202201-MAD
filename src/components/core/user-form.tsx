@@ -61,10 +61,20 @@ export function UserForm({
       />
       <br />
 
-      <button type="submit" className="login-button" onClick={handleSubmit}>
+      <button
+        type="submit"
+        className="login-button"
+        role="login-button"
+        onClick={handleSubmit}
+      >
         {mode.toLowerCase() === "login" ? "Login" : "Register"}
       </button>
-      <button type="reset" className="cancel-button" onClick={handleCancel}>
+      <button
+        type="reset"
+        role="cancel-button"
+        className="cancel-button"
+        onClick={handleCancel}
+      >
         Cancel
       </button>
     </form>
