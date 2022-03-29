@@ -76,7 +76,8 @@ export function Add() {
 
     console.log("Added location", newLocation);
 
-    //addTask({ ...newTask, responsible: { _id: user.id, name: user.userName } });
+    // dejado como referencia al proyecto anterior
+    // addTask({ ...newTask, responsible: { _id: user.id, name: user.userName } });
     setNewLocation(new Location());
   };
 

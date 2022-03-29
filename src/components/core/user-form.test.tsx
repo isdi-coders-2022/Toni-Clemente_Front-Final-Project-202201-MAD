@@ -1,9 +1,8 @@
-import { render } from '../../redux/test.utils.js';
-import { screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-import { UserForm } from './user-form';
+import { render } from "../../redux/test.utils.js";
+import { screen } from "@testing-library/react";
+import { UserForm } from "./user-form";
 
-describe('UserForm Component', () => {
+describe("UserForm Component", () => {
   let preloadedState: any;
   beforeEach(() => {
     preloadedState = {
@@ -12,13 +11,29 @@ describe('UserForm Component', () => {
       },
     };
   });
-  test('should be rendered for us logging', () => {
-    render(<UserForm mode={'login'} />, { preloadedState });
+  test("should be rendered for us logging", () => {
+    render(
+      <UserForm
+        mode={"login"}
+        setShowForm={() => {
+          //
+        }}
+      />,
+      { preloadedState }
+    );
     expect(screen.getAllByText(/Login/i));
   });
-  test('should be rendered when user is logged', () => {
+  test("should be rendered when user is logged", () => {
     preloadedState.user.isLogged = true;
-    render(<UserForm mode={'registration'} />, { preloadedState });
+    render(
+      <UserForm
+        mode={"registration"}
+        setShowForm={() => {
+          //
+        }}
+      />,
+      { preloadedState }
+    );
     expect(screen.getAllByText(/Register/i));
   });
 });
