@@ -23,6 +23,7 @@ describe("All-locations Component", () => {
     mockedGetAll.mockResolvedValue(mockLocations);
   });
 
+  //
   test("should be rendered", async () => {
     await render(
       <Router>
