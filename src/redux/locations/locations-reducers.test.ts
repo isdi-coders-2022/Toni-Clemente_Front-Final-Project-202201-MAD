@@ -28,19 +28,19 @@ describe("Given the function LocationsReducer", () => {
     });
   });
 
-  describe("When passing a state and the remove action", () => {
-    test("then it should return the state without the removed location", () => {
-      const newState = locationsReducer(
-        mockState,
-        action.removeLocation({ id: 3, location: "mula" })
-      );
+  // describe("When passing a state and the remove action", () => {
+  //   test("then it should return the state without the removed location", () => {
+  //     const newState = locationsReducer(
+  //       mockState,
+  //       action.removeLocation({ id: 3, location: "mula" })
+  //     );
 
-      expect(newState).toEqual([
-        { id: 1, location: "cehegin" },
-        { id: 2, location: "caravaca" },
-      ]);
-    });
-  });
+  //     expect(newState).toEqual([
+  //       { id: 1, location: "cehegin" },
+  //       { id: 2, location: "caravaca" },
+  //     ]);
+  //   });
+  // });
 
   describe("When passing a state and the load action", () => {
     test("then it should return the current state", () => {

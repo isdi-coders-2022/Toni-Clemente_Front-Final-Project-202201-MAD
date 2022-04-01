@@ -5,14 +5,12 @@ import { MemoryRouter as Router } from "react-router-dom";
 import { AllLocations } from "./all-locations";
 import { AxiosResponse } from "axios";
 
-// Moqueamos getAll de la api, que extrae todas las locations que tengamos almacenadas.
 jest.mock("../../services/api");
 const mockedGetAll = getAll as jest.Mock<Promise<AxiosResponse<any, any>>>;
 
 describe("All-locations Component", () => {
   let mockLocations: any;
 
-  // Moqueamos tres posibles localizaciones
   beforeEach(() => {
     mockLocations = {
       data: [
@@ -21,7 +19,7 @@ describe("All-locations Component", () => {
         { id: 3, text: "Test Location 3" },
       ],
     };
-    // ejecutamos nuestro moqueo del getAll con las localizaciones para que las muestre.
+
     mockedGetAll.mockResolvedValue(mockLocations);
   });
 

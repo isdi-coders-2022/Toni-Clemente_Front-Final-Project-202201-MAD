@@ -36,8 +36,6 @@ export function Update() {
     photo: "",
   });
 
-  // extrae la información de la ID que estamos viendo en detalles, setlocationupdate. La pasa al estado que tengo
-  // justo encima para definir las propiedades disponibles.
   useEffect(() => {
     getDetails(detailsURL).then((resp) => {
       setLocationUpdate(resp.data);
@@ -45,19 +43,16 @@ export function Update() {
     });
   }, []);
 
-  //efectúa los cambios en la api
   const toggleLocation = (newLocation: any) => {
     update(newLocation, user.token).then((resp) =>
       dispatch(updateLocation(resp.data))
     );
-    //necesita esperar 1 segundo para mostrar en la lista el cambio correctamente.
-    // de lo contrario mostraría en la lista la modificacion aplicada a todas las localizaciones
+
     setTimeout(() => {
       navigate("/AllLocations");
     }, 1000);
   };
 
-  //ESTADO QUE NO SÉ BIEN LO QUE HACE.
   const [newLocation, setNewLocation] = useState({
     _id: _id,
     state: locationUpdate.state,

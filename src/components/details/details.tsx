@@ -3,13 +3,13 @@ import { useEffect, useState } from "react";
 import { getDetails, remove } from "../../services/api";
 import { useSelector, useDispatch } from "react-redux";
 import { removeLocation } from "../../redux/locations/action-creators";
-import { store } from "../../redux/store"; //añadido, supuestamente soluciona el problema
-type RootState = ReturnType<typeof store.getState>; //añadido, supuestamente soluciona el problema
+import { store } from "../../redux/store";
+type RootState = ReturnType<typeof store.getState>;
 
 import "./details.scss";
 
 export function Details() {
-  const user = useSelector((state: RootState) => state.user); // añadido : RootState  al ((state
+  const user = useSelector((state: RootState) => state.user);
 
   const { _id } = useParams();
   const dispatch = useDispatch();
@@ -33,15 +33,14 @@ export function Details() {
   useEffect(() => {
     getDetails(detailsURL).then((resp) => {
       setLocationDetails(resp.data);
-      console.log(resp.data);
     });
   }, []);
 
   const deleteLocation = () => {
     remove(locationDetails._id, user.token).then((resp) => {
       if (resp.statusText.toLowerCase() === "ok") {
-        dispatch(removeLocation(locationDetails._id));
       }
+      dispatch(removeLocation(resp.data));
       navigate("/AllLocations");
     });
   };
@@ -70,7 +69,7 @@ export function Details() {
         </div>
         <div className="location-details__info">
           <div className="location-details__info1">
-            A location in {locationDetails.town}, {locationDetails.state}
+            {locationDetails.town}, {locationDetails.state}
           </div>
           <div className="location-details__info2">
             {locationDetails.comment}

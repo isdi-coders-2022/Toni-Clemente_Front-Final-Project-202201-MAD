@@ -23,6 +23,7 @@ export function AllLocations() {
 
   return (
     <>
+      <img src="./img/logo.png"></img>
       {locations.length ? (
         <>
           <h2>Locations list</h2>
