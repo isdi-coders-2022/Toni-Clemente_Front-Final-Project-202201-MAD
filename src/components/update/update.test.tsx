@@ -1,10 +1,5 @@
 import { render } from "../../redux/test.utils.js";
 import { screen } from "@testing-library/react";
-import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
-import { app } from "../../firebase/firebase";
-//import firebase from "firebase/app";
-import userEvent from "@testing-library/user-event";
-import firebase from "@firebase/analytics";
 
 import { Update } from "./update";
 
